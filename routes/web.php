@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+//zura modified - to use redirect
+/*
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -13,10 +18,33 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+*/
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//modification below
+
+Route::redirect('/','/dashboard'); // redirect '/' to '/dashboard'
+
+//create middleware group - so authenticated user can only enter the restricted links
+
+//normal function version
+/*
+Route::middleware(['auth','verified'])->group(function(){
+    //this is the protected link
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+});
+*/
+// arrow function version
+Route::middleware(['auth','verified'])->group(function(){
+    //this is the protected link
+    Route::get('/dashboard', fn ()=>Inertia::render('Dashboard')
+    )->name('dashboard');
+    //add in project controller , task controller and user controller
+    Route::resource('project',ProjectController::class);
+    Route::resource('task',TaskController::class);
+    Route::resource('user',UserController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
