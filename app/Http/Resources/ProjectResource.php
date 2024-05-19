@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UserResource;
 
 class ProjectResource extends JsonResource
 {
@@ -19,12 +20,14 @@ class ProjectResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'description'=>$this->description,
-            'due-date'=>(new Carbon($this->due_date))->format('Y-m-d'),
+            'dueDate'=>(new Carbon($this->dueDate))->format('Y-m-d'),
             'status'=> $this->status,
-            'image_path'=>$this->image_path,
-            'created_by'=>$this->created_by,
-            'updated_by'=>$this->updated_by,
-            'created_at'=>(new Carbon($this->created_at))->format("Y-m-d"),
+            'imagePath'=>$this->imagePath,
+            // 'created_by'=>$this->created_by,
+            'createdBy'=>new UserResource($this->createdBy),
+            // 'updatedBy'=>$this->updated_by,
+            'updatedBy'=>new UserResource($this->updatedBy),
+            'createdAt'=>(new Carbon($this->createdAt))->format("Y-m-d"),
         ];
     }
 }
