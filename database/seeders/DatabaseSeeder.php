@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Project;
+use App\Models\Task;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,12 @@ class DatabaseSeeder extends Seeder
         Project::factory()
                     ->count(30)
                     ->hasTasks(30)
+                    ->create();
+
+        // do i still need this? hasTasks above seems to already seed the DB
+        Task::factory()
+                    ->count(30)
+                    ->hasUsers(30)
                     ->create();
     }
 }
