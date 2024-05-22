@@ -47,8 +47,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                 >
                   Dashboard
                 </NavLink> */}
-                {links.map((item) => (
+                {links.map((item,index) => (
                   <NavLink
+                    key={index}
                     href={route(item.route)}
                     active={route().current(item.route)}
                   >

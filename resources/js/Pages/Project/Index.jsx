@@ -13,14 +13,14 @@ import TableHeading from "@/Components/TableHeading.jsx";
 export default function Index({ auth, projects, queryParams = null }) {
   //const [sortAsc, setsortAsc] = useState(true);
 
-  queryParams = queryParams || {};
+  queryParams = queryParams || {}; // if queryParam is null, convert it into object! see ProjectController Note A!
   const searchFieldChanged = (name, value) => {
     if (value) {
       queryParams[name] = value;
     } else {
       delete queryParams[name];
     }
-
+    console.log("queryParams:"+Object.entries(queryParams));
     router.get(route("project.index", queryParams));
   };
 
@@ -49,7 +49,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
                       <th
-                        onClick={(e) => sortChanged("id")}
+                        //onClick={(e) => sortChanged("id")}
                         className="px-3 py-2 "
                       >
                         <TableHeading name={"id"} queryParams={queryParams}>
@@ -58,7 +58,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                       </th>
                       <th className="px-3 py-2">Image</th>
                       <th
-                        onClick={(e) => sortChanged("name")}
+                        //onClick={(e) => sortChanged("name")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"name"} queryParams={queryParams}>
@@ -66,7 +66,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("status")}
+                        //onClick={(e) => sortChanged("status")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"status"} queryParams={queryParams}>
@@ -74,7 +74,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("created_at")}
+                        //onClick={(e) => sortChanged("created_at")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"created_at"} queryParams={queryParams}>
@@ -82,7 +82,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("due_date")}
+                       // onClick={(e) => sortChanged("due_date")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"due_date"} queryParams={queryParams}>
@@ -90,7 +90,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("created_by")}
+                        //onClick={(e) => sortChanged("created_by")}
                         className="px-3 py-2"
                       >
                        <TableHeading name={"created_by"} queryParams={queryParams}>
@@ -98,7 +98,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("updated_by")}
+                        //onClick={(e) => sortChanged("updated_by")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"updated_by"} queryParams={queryParams}>

@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -19,21 +20,40 @@ class ProjectController extends Controller
 
         $sortFields = request("sort_field", "created_at");
         $sortDirection = request("sort_direction", "desc");
-
-
-        if (request("name")){
-            $query->where("name","like","%".request("name")."%");
+        if (request("name")) {
+            $query->where("name", "like", "%" . request("name") . "%");
         }
-        if(request("status")){
-            $query->where("status",request("status"));
+        if (request("status")) {
+            $query->where("status", request("status"));
         }
-      
-        $projects = $query->orderBy($sortFields,$sortDirection)->paginate(10);
-        return inertia("Project/Index",[
-            "projects"=> ProjectResource::collection($projects),
-            'queryParams'=>request()->query(),
+        $projects = $query->orderBy($sortFields, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+        //Log::info('Sort field: ' . (string)$sortFields . " , sortDirection: " . (string)$sortDirection);
+        return inertia("Project/Index", [
+            "projects" => ProjectResource::collection($projects),
+            'queryParams' => request()->query() ?: null, // Note A : if empty array then pass null! the front end will handle null!
         ]);
     }
+
+    /*
+        Breakdown: request()->query():
+        This function retrieves all query parameters from the current HTTP request as an associative array. 
+        For example, if the URL is http://example.com/projects?name=abc&status=active, the query parameters would be ['name' => 'abc', 'status' => 'active'].
+        ?:null:
+
+        This is the null coalescing operator in PHP. It means that if request()->query() returns an empty 
+        array (i.e., no query parameters were provided), it will instead set queryParams to null.
+        Purpose:
+        Avoid sending an empty array: If there are no query parameters, sending an empty array might not be 
+        desirable. By setting queryParams to null when there are no parameters, the frontend can handle this 
+        case more gracefully.
+        Frontend Handling: The comment suggests that the frontend is designed to handle null for query 
+        parameters. This likely means it won't attempt to parse or display filter/sorting options if 
+        none were provided.
+
+    */
 
     /**
      * Show the form for creating a new resource.

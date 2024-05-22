@@ -11,7 +11,6 @@ import SelectInput from "@/Components/SelectInput.jsx";
 import TableHeading from "@/Components/TableHeading.jsx";
 
 export default function Index({ auth, tasks, queryParams = null }) {
-  //const [sortAsc, setsortAsc] = useState(true);
 
   queryParams = queryParams || {};
   const searchFieldChanged = (name, value) => {
@@ -163,7 +162,7 @@ export default function Index({ auth, tasks, queryParams = null }) {
                           <span
                             className={
                               "px-2 py-1 rounded text-white " +
-                              tasks[item.status]
+                              TASK_STATUS_CLASS_MAP[item.status]
                             }
                           >
                             {TASK_STATUS_TEXT_MAP[item.status]}

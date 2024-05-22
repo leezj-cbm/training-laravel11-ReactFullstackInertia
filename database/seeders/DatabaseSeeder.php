@@ -30,9 +30,9 @@ class DatabaseSeeder extends Seeder
                     ->create();
 
         // do i still need this? hasTasks above seems to already seed the DB
-        Task::factory()
-                    ->count(30)
-                    ->hasUsers(30)
-                    ->create();
+        // Task::factory()
+        //             ->count(30)
+        //             ->hasUsers(30)
+        //             ->create();
     }
 }
