@@ -10,7 +10,7 @@ import TextInput from "@/Components/TextInput.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import TableHeading from "@/Components/TableHeading.jsx";
 
-export default function Index({ auth, projects, queryParams = null }) {
+export default function Index({ auth, projects, queryParams = null,routing }) {
   //const [sortAsc, setsortAsc] = useState(true);
 
   queryParams = queryParams || {}; // if queryParam is null, convert it into object! see ProjectController Note A!
@@ -52,7 +52,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         //onClick={(e) => sortChanged("id")}
                         className="px-3 py-2 "
                       >
-                        <TableHeading name={"id"} queryParams={queryParams}>
+                        <TableHeading name={"id"} queryParams={queryParams} routing={routing}>
                           ID
                         </TableHeading>
                       </th>
@@ -61,15 +61,23 @@ export default function Index({ auth, projects, queryParams = null }) {
                         //onClick={(e) => sortChanged("name")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"name"} queryParams={queryParams}>
+                        <TableHeading name={"name"} queryParams={queryParams} routing={routing}>
                           Name
+                        </TableHeading>
+                      </th>
+                      <th
+                        //onClick={(e) => sortChanged("name")}
+                        className="px-3 py-2"
+                      >
+                        <TableHeading name={"description"} queryParams={queryParams} routing={routing}>
+                          Description
                         </TableHeading>
                       </th>
                       <th
                         //onClick={(e) => sortChanged("status")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"status"} queryParams={queryParams}>
+                        <TableHeading name={"status"} queryParams={queryParams} routing={routing}>
                           Status
                         </TableHeading>
                       </th>
@@ -77,7 +85,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         //onClick={(e) => sortChanged("created_at")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"created_at"} queryParams={queryParams}>
+                        <TableHeading name={"created_at"} queryParams={queryParams} routing={routing}>
                           Created At
                         </TableHeading>
                       </th>
@@ -85,7 +93,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                        // onClick={(e) => sortChanged("due_date")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"due_date"} queryParams={queryParams}>
+                        <TableHeading name={"due_date"} queryParams={queryParams} routing={routing}>
                           Due Date
                         </TableHeading>
                       </th>
@@ -93,7 +101,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         //onClick={(e) => sortChanged("created_by")}
                         className="px-3 py-2"
                       >
-                       <TableHeading name={"created_by"} queryParams={queryParams}>
+                       <TableHeading name={"created_by"} queryParams={queryParams} routing={routing}>
                           Created By
                         </TableHeading>
                       </th>
@@ -101,7 +109,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                         //onClick={(e) => sortChanged("updated_by")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"updated_by"} queryParams={queryParams}>
+                        <TableHeading name={"updated_by"} queryParams={queryParams} routing={routing}>
                           Updated By
                         </TableHeading>
                       </th>
@@ -123,6 +131,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                           onKeyPress={(e) => onKeyPress("name", e)}
                         />
                       </th>
+                      <th className="px-3 py-2"></th>
                       <th className="px-3 py-2">
                         <SelectInput
                           className="w-full"
@@ -159,6 +168,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                           />
                         </td>
                         <td className="px-3 py-2">{item.name}</td>
+                        <td className="px-3 py-2">{item.description}</td>
                         <td className="px-3 py-2">
                           <span
                             className={

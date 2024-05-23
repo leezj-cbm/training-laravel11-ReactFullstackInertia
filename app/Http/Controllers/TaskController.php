@@ -33,6 +33,7 @@ class TaskController extends Controller
         return inertia("Task/Index",[
             'tasks'=>TaskResource::Collection($tasks),
             'queryParam'=> request()->query()?:null,
+            'routing'=>'task.index'
         ]);
     }
 

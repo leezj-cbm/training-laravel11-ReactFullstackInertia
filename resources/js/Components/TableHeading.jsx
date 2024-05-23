@@ -1,7 +1,7 @@
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import { router } from "@inertiajs/react";
 
-export default function TableHeading({ name, queryParams,children }) {
+export default function TableHeading({ name, queryParams,children,routing }) {
 
   const sortChanged = () => {
     if (name === queryParams.sort_field) {
@@ -14,7 +14,7 @@ export default function TableHeading({ name, queryParams,children }) {
       queryParams.sort_field = name;
       queryParams.sort_direction = "asc";
     }
-    router.get(route("project.index", queryParams));
+    router.get(route(routing, queryParams));
   };
 
   return (

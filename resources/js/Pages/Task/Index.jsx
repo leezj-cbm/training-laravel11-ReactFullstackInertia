@@ -10,7 +10,7 @@ import TextInput from "@/Components/TextInput.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import TableHeading from "@/Components/TableHeading.jsx";
 
-export default function Index({ auth, tasks, queryParams = null }) {
+export default function Index({ auth, tasks, queryParams = null,routing}) {
 
   queryParams = queryParams || {};
   const searchFieldChanged = (name, value) => {
@@ -48,59 +48,59 @@ export default function Index({ auth, tasks, queryParams = null }) {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
                       <th
-                        onClick={(e) => sortChanged("id")}
                         className="px-3 py-2 "
                       >
-                        <TableHeading name={"id"} queryParams={queryParams}>
+                        <TableHeading name={"id"} queryParams={queryParams} routing={routing}>
                           ID
                         </TableHeading>
                       </th>
                       <th className="px-3 py-2">Image</th>
                       <th
-                        onClick={(e) => sortChanged("name")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"name"} queryParams={queryParams}>
+                        <TableHeading name={"name"} queryParams={queryParams} routing={routing}>
                           Name
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("status")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"status"} queryParams={queryParams}>
+                        <TableHeading name={"description"} queryParams={queryParams} routing={routing}>
+                          Description
+                        </TableHeading>
+                      </th>
+                      <th
+                        className="px-3 py-2"
+                      >
+                        <TableHeading name={"status"} queryParams={queryParams} routing={routing}>
                           Status
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("created_at")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"created_at"} queryParams={queryParams}>
+                        <TableHeading name={"created_at"} queryParams={queryParams} routing={routing}>
                           Created At
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("due_date")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"due_date"} queryParams={queryParams}>
+                        <TableHeading name={"due_date"} queryParams={queryParams} routing={routing}>
                           Due Date
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("created_by")}
                         className="px-3 py-2"
                       >
-                       <TableHeading name={"created_by"} queryParams={queryParams}>
+                       <TableHeading name={"created_by"} queryParams={queryParams} routing={routing}>
                           Created By
                         </TableHeading>
                       </th>
                       <th
-                        onClick={(e) => sortChanged("updated_by")}
                         className="px-3 py-2"
                       >
-                        <TableHeading name={"updated_by"} queryParams={queryParams}>
+                        <TableHeading name={"updated_by"} queryParams={queryParams} routing={routing}>
                           Updated By
                         </TableHeading>
                       </th>
@@ -122,6 +122,7 @@ export default function Index({ auth, tasks, queryParams = null }) {
                           onKeyPress={(e) => onKeyPress("name", e)}
                         />
                       </th>
+                      <th className="px-3 py-2"></th>
                       <th className="px-3 py-2">
                         <SelectInput
                           className="w-full"
@@ -158,6 +159,7 @@ export default function Index({ auth, tasks, queryParams = null }) {
                           />
                         </td>
                         <td className="px-3 py-2">{item.name}</td>
+                        <td className="px-3 py-2">{item.description}</td>
                         <td className="px-3 py-2">
                           <span
                             className={
@@ -174,8 +176,12 @@ export default function Index({ auth, tasks, queryParams = null }) {
                         <td className="px-3 py-2 text-nowrap">
                           {item.dueDate}
                         </td>
-                        <td className="px-3 py-2">{item.createdBy.name}</td>
-                        <td className="px-3 py-2">{item.updatedBy.name}</td>
+                        <td className="px-3 py-2">
+                          {item.createdBy}
+                          </td>
+                        <td className="px-3 py-2">
+                          {item.updatedBy}
+                          </td>
                         <td>
                           <Link
                             href={route("task.edit", item.id)}
