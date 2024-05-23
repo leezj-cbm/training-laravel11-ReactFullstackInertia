@@ -20,7 +20,7 @@ export default function Index({ auth, tasks, queryParams = null,routing}) {
       delete queryParams[name];
     }
 
-    router.get(route("task.index", queryParams));
+    router.get(route(routing, queryParams));
   };
 
   const onKeyPress = (name, e) => {
@@ -79,6 +79,20 @@ export default function Index({ auth, tasks, queryParams = null,routing}) {
                       <th
                         className="px-3 py-2"
                       >
+                        <TableHeading name={"priority"} queryParams={queryParams} routing={routing}>
+                          Priority
+                        </TableHeading>
+                      </th>
+                      <th
+                        className="px-3 py-2"
+                      >
+                        <TableHeading name={"assigned_user_id"} queryParams={queryParams} routing={routing}>
+                          Assigned User ID
+                        </TableHeading>
+                      </th>
+                      <th
+                        className="px-3 py-2"
+                      >
                         <TableHeading name={"created_at"} queryParams={queryParams} routing={routing}>
                           Created At
                         </TableHeading>
@@ -114,7 +128,7 @@ export default function Index({ auth, tasks, queryParams = null,routing}) {
                       <th className="px-3 py-2">
                         <TextInput
                           className="w-full "
-                          placeholder="task Name"
+                          placeholder="Task Name"
                           defaultValue={queryParams.name}
                           onBlur={(e) =>
                             searchFieldChanged("name", e.target.value)
@@ -137,6 +151,8 @@ export default function Index({ auth, tasks, queryParams = null,routing}) {
                           <option value="completed">Completed</option>
                         </SelectInput>
                       </th>
+                      <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
                       <th className="px-3 py-2"></th>
                       <th className="px-3 py-2"></th>
                       <th className="px-3 py-2"></th>
@@ -169,6 +185,12 @@ export default function Index({ auth, tasks, queryParams = null,routing}) {
                           >
                             {TASK_STATUS_TEXT_MAP[item.status]}
                           </span>
+                        </td>
+                        <td className="px-3 py-2 text-nowrap">
+                          {item.priority}
+                        </td>
+                        <td className="px-3 py-2 text-nowrap">
+                          {item.assignedUserId}
                         </td>
                         <td className="px-3 py-2 text-nowrap">
                           {item.createdAt}

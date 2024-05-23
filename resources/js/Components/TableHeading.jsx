@@ -4,6 +4,7 @@ import { router } from "@inertiajs/react";
 export default function TableHeading({ name, queryParams,children,routing }) {
 
   const sortChanged = () => {
+    console.log("TableHeading A: Clicked! routing="+routing+" name="+name+" queryParams.sort_field="+queryParams.sort_field+" queryParams.sort_direction="+queryParams.sort_direction);
     if (name === queryParams.sort_field) {
       if (queryParams.sort_direction === "asc") {
         queryParams.sort_direction= "desc";
@@ -14,6 +15,7 @@ export default function TableHeading({ name, queryParams,children,routing }) {
       queryParams.sort_field = name;
       queryParams.sort_direction = "asc";
     }
+    console.log("TableHeading B: Processed! routing="+routing+" name="+name+" queryParams.sort_Field="+queryParams.sort_field+" queryParams.sort_direction="+queryParams.sort_direction);
     router.get(route(routing, queryParams));
   };
 
@@ -23,6 +25,7 @@ export default function TableHeading({ name, queryParams,children,routing }) {
       onClick={sortChanged}
     >
       {children}
+      {/* <pre>{JSON.stringify(queryParams)}</pre> */}
       <div>
         <ChevronUpIcon
           className={

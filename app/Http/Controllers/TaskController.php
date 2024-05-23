@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
@@ -17,23 +18,23 @@ class TaskController extends Controller
         //
         $query = Task::query();
 
-        $sortFields = request()->query('sort_field','created_at');
-        $sortDirection=request()->query('sort_direction','desc');
+        $sortFields = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
 
-        if(request("name")){
+        if (request("name")) {
             $query->where("name", "like", "%" . request("name") . "%");
         }
 
-        if(request("status")){
+        if (request("status")) {
             $query->where("status", request("status"));
         }
+        Log::info("TaskController -> sortField=" . (string)$sortFields . " sortDirection=" . (string)$sortDirection);
+        $tasks = $query->orderBy($sortFields, $sortDirection)->paginate(10)->onEachSide(1);
 
-        $tasks = $query->orderBy($sortFields,$sortDirection)->paginate(10)->onEachSide(1);
-
-        return inertia("Task/Index",[
-            'tasks'=>TaskResource::Collection($tasks),
-            'queryParam'=> request()->query()?:null,
-            'routing'=>'task.index'
+        return inertia("Task/Index", [
+            'tasks' => TaskResource::Collection($tasks),
+            'queryParams' => request()->query() ?: null,
+            'routing' => 'task.index'
         ]);
     }
 

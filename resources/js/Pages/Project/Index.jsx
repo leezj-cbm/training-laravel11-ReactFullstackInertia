@@ -21,7 +21,7 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
       delete queryParams[name];
     }
     console.log("queryParams:"+Object.entries(queryParams));
-    router.get(route("project.index", queryParams));
+    router.get(route(routing, queryParams));
   };
 
   const onKeyPress = (name, e) => {
@@ -49,7 +49,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
                       <th
-                        //onClick={(e) => sortChanged("id")}
                         className="px-3 py-2 "
                       >
                         <TableHeading name={"id"} queryParams={queryParams} routing={routing}>
@@ -58,7 +57,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                       </th>
                       <th className="px-3 py-2">Image</th>
                       <th
-                        //onClick={(e) => sortChanged("name")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"name"} queryParams={queryParams} routing={routing}>
@@ -66,7 +64,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </TableHeading>
                       </th>
                       <th
-                        //onClick={(e) => sortChanged("name")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"description"} queryParams={queryParams} routing={routing}>
@@ -74,7 +71,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </TableHeading>
                       </th>
                       <th
-                        //onClick={(e) => sortChanged("status")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"status"} queryParams={queryParams} routing={routing}>
@@ -82,7 +78,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </TableHeading>
                       </th>
                       <th
-                        //onClick={(e) => sortChanged("created_at")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"created_at"} queryParams={queryParams} routing={routing}>
@@ -90,7 +85,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </TableHeading>
                       </th>
                       <th
-                       // onClick={(e) => sortChanged("due_date")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"due_date"} queryParams={queryParams} routing={routing}>
@@ -98,7 +92,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </TableHeading>
                       </th>
                       <th
-                        //onClick={(e) => sortChanged("created_by")}
                         className="px-3 py-2"
                       >
                        <TableHeading name={"created_by"} queryParams={queryParams} routing={routing}>
@@ -106,7 +99,6 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </TableHeading>
                       </th>
                       <th
-                        //onClick={(e) => sortChanged("updated_by")}
                         className="px-3 py-2"
                       >
                         <TableHeading name={"updated_by"} queryParams={queryParams} routing={routing}>
