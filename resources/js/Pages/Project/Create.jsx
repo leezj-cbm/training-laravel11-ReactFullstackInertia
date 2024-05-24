@@ -1,0 +1,132 @@
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import SelectInput from "@/Components/SelectInput";
+import TextInput from "@/Components/TextInput";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
+
+export default function Create({ auth }) {
+  const { data, setData, post, errors, reset } = useForm({
+    image: "",
+    name: "",
+    status: "",
+    description: "",
+    due_date: "",
+  });
+
+  const onChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventdefault();
+
+    post(route("project.create"));
+  };
+
+  return (
+    <AuthenticatedLayout
+      user={auth.user}
+      header={
+        <div className="flex justify-between items-center">
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Create Projects
+          </h2>
+        </div>
+      }
+    >
+      <Head title="Projects" />
+
+      <div className="max-w-7xl mt-5 mx-auto sm:px-6 lg:px-8">
+        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div className="p-6 text-gray-900 dark:text-gray-100">
+            <pre>{JSON.stringify(data, undefined, 4)}</pre>
+
+            <form
+              onSubmit={onSubmit}
+              className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
+            >
+              <div className="mt-4">
+                <InputLabel
+                  htmlFor="project_image_path"
+                  value="Project Image"
+                />
+                <TextInput
+                  id="project_image_path"
+                  type="file"
+                  name="image"
+                  value={data.image}
+                  className="mt-1 block w-full"
+                  onChange={(e) => onChange(e)}
+                />
+                <InputError message={errors.image} className="mt-2" />
+              </div>
+              <div className="mt-4">
+                <InputLabel htmlFor="name" value="Project Name" />
+                <TextInput
+                  id="project_name"
+                  type="text"
+                  name="name"
+                  value={data.name}
+                  className="mt-1 block w-full"
+                  onChange={(e) => onChange(e)}
+                />
+                <InputError message={errors.name} className="mt-2" />
+              </div>
+              <div className="mt-4">
+                <InputLabel htmlFor="status" value="Project Status" />
+                <SelectInput
+                  className="w-full"
+                  name="status"
+                  defaultValue={data.status}
+                  onChange={(e) => onChange(e)}
+                >
+                  <option value="">Select Status</option>
+                  <option value="pending">Pending</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </SelectInput>
+                <InputError message={errors.status} className="mt-2" />
+              </div>
+              <div className="mt-4">
+                <InputLabel htmlFor="status" value="Project Description" />
+                <TextInput
+                  id="description"
+                  type="text"
+                  name="description"
+                  value={data.description}
+                  className="mt-1 block w-full"
+                  onChange={(e) => onChange(e)}
+                />
+                <InputError message={errors.description} className="mt-2" />
+              </div>
+              <div className="mt-4">
+                <InputLabel htmlFor="status" value="Project Due Date" />
+                <TextInput
+                  id="due_date"
+                  type="date"
+                  name="due_date"
+                  value={data.due_date}
+                  className="mt-1 block w-full"
+                  onChange={(e) => onChange(e)}
+                />
+                <InputError message={errors.description} className="mt-2" />
+              </div>
+              <div className="mt-4 text-right">
+                <Link
+                  href={route("project.index")}
+                  className="text-gray- 800 rounded shadow transition-all hover:bg-gray-200 mr-2 text-sm h-16"
+                >
+                  Cancel
+                </Link>
+                <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600 text-sm h-16">
+                    Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </AuthenticatedLayout>
+  );
+}
