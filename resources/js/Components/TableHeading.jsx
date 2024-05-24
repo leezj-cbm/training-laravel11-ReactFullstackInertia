@@ -15,6 +15,7 @@ export default function TableHeading({ name, queryParams,children,routing }) {
       queryParams.sort_field = name;
       queryParams.sort_direction = "asc";
     }
+
     console.log("TableHeading B: Processed! routing="+routing+" name="+name+" queryParams.sort_Field="+queryParams.sort_field+" queryParams.sort_direction="+queryParams.sort_direction);
     router.get(route(routing, queryParams));
   };

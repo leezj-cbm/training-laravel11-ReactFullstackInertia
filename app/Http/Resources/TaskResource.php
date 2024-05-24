@@ -24,12 +24,10 @@ class TaskResource extends JsonResource
             'priority'=>$this->priority,//
             'createdAt'=>(new Carbon($this->created_at))->format('Y-m-d'),//
             'dueDate'=>(new Carbon($this->created_at))->format('Y-m-d'),//
-            'assignedUserId'=>$this->assigned_user_id, //
-            //'created_by'=>new ProjectResource($this->createdBy), //
-            //'updated_by'=>new ProjectResource($this->updatedBy), //
-            'createdBy'=>$this->created_by, 
-            'updatedBy'=>$this->updated_by,  
-            'project_id'=>$this->project_id, //
+            'assignedUserId'=>$this->assigned_user_id? new UserResource($this->assignedUser):null, // //
+            'createdBy'=>new UserResource($this->createdBy), 
+            'updatedBy'=>new UserResource($this->updatedBy),  
+            'projectId'=>$this->project_id, //
         ];
     }
 }

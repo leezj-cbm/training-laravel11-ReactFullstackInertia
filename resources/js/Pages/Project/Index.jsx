@@ -159,7 +159,9 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                             style={{ width: 60 }}
                           />
                         </td>
-                        <td className="px-3 py-2">{item.name}</td>
+                        <th className="px-3 py-2 text-white hover:underline">
+                          <Link href={route('project.show',item)}>{item.name}</Link>
+                        </th>
                         <td className="px-3 py-2">{item.description}</td>
                         <td className="px-3 py-2">
                           <span
