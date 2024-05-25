@@ -5,13 +5,13 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ auth }) {
+export default function Edit({ auth, project}) {
   const { data, setData, post, errors, reset } = useForm({
     image: "",
-    name: "",
-    status: "",
-    description: "",
-    due_date: "",
+    name: project.name || "",
+    status: project.status || "",
+    description: project.description || "",
+    due_date: project.dueDate || "",
   });
 
   const onChange = (e) => {
@@ -30,7 +30,7 @@ export default function Create({ auth }) {
       header={
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Create Projects
+            Edit Projects : {project.name}
           </h2>
         </div>
       }
@@ -40,12 +40,13 @@ export default function Create({ auth }) {
       <div className="max-w-7xl mt-5 mx-auto sm:px-6 lg:px-8">
         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div className="p-6 text-gray-900 dark:text-gray-100">
-            {/* <pre>{JSON.stringify(data, undefined, 4)}</pre> */}
+            <pre>{JSON.stringify(data, undefined, 4)}</pre>
 
             <form
               onSubmit={e=>onSubmit(e)}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
             >
+              {}
               <div className="mt-4">
                 <InputLabel
                   htmlFor="project_image_path"
@@ -56,7 +57,7 @@ export default function Create({ auth }) {
                   type="file"
                   name="image"
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("image", e.target.files[0])}
+                  onChange={(e) => setData({...data, "image":e.target.files[0]})}
                 />
                 <InputError message={errors.image} className="mt-2" />
               </div>

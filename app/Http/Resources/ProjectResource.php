@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectResource extends JsonResource
 {
@@ -25,7 +26,7 @@ class ProjectResource extends JsonResource
             'description'=>$this->description,
             'dueDate'=>(new Carbon($this->due_date))->format('Y-m-d'),
             'status'=> $this->status,
-            'imgPath'=>$this->img_path,
+            'imgPath'=>$this->img_path ? Storage::url($this->img_path):'',
             // 'created_by'=>$this->created_by,
             'createdBy'=>new UserResource($this->createdBy),
             // 'updatedBy'=>$this->updated_by,

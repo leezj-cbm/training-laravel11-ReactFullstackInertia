@@ -10,7 +10,13 @@ import TextInput from "@/Components/TextInput.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
 import TableHeading from "@/Components/TableHeading.jsx";
 
-export default function Index({ auth, projects, queryParams = null,routing }) {
+export default function Index({
+  auth,
+  projects,
+  queryParams = null,
+  routing,
+  success = null,
+}) {
   //const [sortAsc, setsortAsc] = useState(true);
 
   queryParams = queryParams || {}; // if queryParam is null, convert it into object! see ProjectController Note A!
@@ -20,7 +26,7 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
     } else {
       delete queryParams[name];
     }
-    console.log("queryParams:"+Object.entries(queryParams));
+    console.log("queryParams:" + Object.entries(queryParams));
     router.get(route(routing, queryParams));
   };
 
@@ -29,21 +35,38 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
     searchFieldChanged(name, e.target.value);
   };
 
+  const deleteProject=(theProject)=>{
+    if (!window.confirm("Are you sure you want to delete project?")){
+      return;
+    }
+    router.delete(route('project.destroy',theProject));
+
+  }
+
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-            <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"> 
-              Projects
-            </h2>
-            <Link href={route("project.create")} className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
-              Add new
-            </Link>
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Projects
+          </h2>
+          <Link
+            href={route("project.create")}
+            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+          >
+            Add new
+          </Link>
         </div>
       }
     >
       <Head title="Projects" />
+
+      {success && (
+        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+          {success}
+        </div>
+      )}
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -53,60 +76,76 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
-                      <th
-                        className="px-3 py-2 "
-                      >
-                        <TableHeading name={"id"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2 ">
+                        <TableHeading
+                          name={"id"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           ID
                         </TableHeading>
                       </th>
                       <th className="px-3 py-2">Image</th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                        <TableHeading name={"name"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"name"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Name
                         </TableHeading>
                       </th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                        <TableHeading name={"description"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"description"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Description
                         </TableHeading>
                       </th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                        <TableHeading name={"status"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"status"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Status
                         </TableHeading>
                       </th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                        <TableHeading name={"created_at"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"created_at"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Created At
                         </TableHeading>
                       </th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                        <TableHeading name={"due_date"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"due_date"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Due Date
                         </TableHeading>
                       </th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                       <TableHeading name={"created_by"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"created_by"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Created By
                         </TableHeading>
                       </th>
-                      <th
-                        className="px-3 py-2"
-                      >
-                        <TableHeading name={"updated_by"} queryParams={queryParams} routing={routing}>
+                      <th className="px-3 py-2">
+                        <TableHeading
+                          name={"updated_by"}
+                          queryParams={queryParams}
+                          routing={routing}
+                        >
                           Updated By
                         </TableHeading>
                       </th>
@@ -165,7 +204,9 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                           />
                         </td>
                         <th className="px-3 py-2 text-white hover:underline">
-                          <Link href={route('project.show',item)}>{item.name}</Link>
+                          <Link href={route("project.show", item)}>
+                            {item.name}
+                          </Link>
                         </th>
                         <td className="px-3 py-2">{item.description}</td>
                         <td className="px-3 py-2">
@@ -186,19 +227,19 @@ export default function Index({ auth, projects, queryParams = null,routing }) {
                         </td>
                         <td className="px-3 py-2">{item.createdBy.name}</td>
                         <td className="px-3 py-2">{item.updatedBy.name}</td>
-                        <td>
+                        <td className="px-3 py-2 text-nowrap">
                           <Link
-                            href={route("project.edit", item.id)}
+                            href={route("project.edit", item)}
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                           >
                             Edit
                           </Link>
-                          <Link
-                            href={route("project.destroy", item.id)}
+                          <button
+                            onClick={e=>deleteProject(item)}
                             className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                           >
                             Delete
-                          </Link>
+                          </button>
                         </td>
                       </tr>
                     ))}
