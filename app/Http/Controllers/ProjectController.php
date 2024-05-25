@@ -10,6 +10,7 @@ use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -148,6 +149,21 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         //
+        $data = request()->validated();
+        dd($data);
+        $image=$data['image']?? null;
+        $data['updated_by']= Auth::id();
+        if ($image){
+            if($project->img_path){
+                Storage::disk('public')->delete($project->img_path);
+            }
+            $data['img_path']= $image->store('project/'.Str::random(),'public');
+            Log::info("ProjectController:update=> Found image");
+         }
+         $project->update($data);
+         Log::info('ProjectController:update=> '.json_encode($data));
+         return to_route('project.index')->with('success','The project:'.(string)$request->name.' was updated');
+
     }
 
     /**
@@ -157,6 +173,10 @@ class ProjectController extends Controller
     {
         //
         $project->delete();
+        if($project->img_path){
+            Storage::disk('public')->delete(dirname($project->img_path));
+            Log::info("ProjectController:destroy, deleted picture ".Json_encode($project->img_path));
+        }
         Log::info("ProjectController:destroy, deleted project ".Json_encode($project));
         return to_route('project.index')->with('success','Project '.(string)$project->name.' was deleted!');
     }

@@ -12,6 +12,7 @@ export default function Edit({ auth, project}) {
     status: project.status || "",
     description: project.description || "",
     due_date: project.dueDate || "",
+    _method:'PUT',
   });
 
   const onChange = (e) => {
@@ -20,8 +21,8 @@ export default function Edit({ auth, project}) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("Project::create->onSubmit, data="+Object.entries(data));
-    post(route("project.store"));
+    console.log("Project::edit->onSubmit, data="+Object.entries(data));
+    post(route("project.update",project.id));
   };
 
   return (
@@ -40,7 +41,13 @@ export default function Edit({ auth, project}) {
       <div className="max-w-7xl mt-5 mx-auto sm:px-6 lg:px-8">
         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div className="p-6 text-gray-900 dark:text-gray-100">
-            <pre>{JSON.stringify(data, undefined, 4)}</pre>
+           
+            <div className="w-full px-2 py-2 m-auto">
+              <img src={project.imgPath}></img>
+            </div>
+
+             <pre>{JSON.stringify(data, undefined, 4)}</pre>
+            {/* <pre>{JSON.stringify(project,undefined,5)}</pre> */}
 
             <form
               onSubmit={e=>onSubmit(e)}
