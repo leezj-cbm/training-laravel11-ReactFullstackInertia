@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 
 //zura modified - to use redirect
 /*
@@ -38,9 +40,11 @@ Route::middleware(['auth','verified'])->group(function(){
 // arrow function version
 Route::middleware(['auth','verified'])->group(function(){
     //this is the protected link
-    Route::get('/dashboard', fn ()=>Inertia::render('Dashboard')
-    )->name('dashboard');
+    //Route::get('/dashboard', fn ()=>Inertia::render('Dashboard'))->name('dashboard');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //add in project controller , task controller and user controller
+
     Route::resource('project',ProjectController::class);
     Route::resource('task',TaskController::class);
     Route::resource('user',UserController::class);

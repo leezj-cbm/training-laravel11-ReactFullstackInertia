@@ -149,13 +149,13 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         //
-        $data = request()->validated();
-        dd($data);
+        $data = $request->validated();
+        //dd($data);
         $image=$data['image']?? null;
         $data['updated_by']= Auth::id();
         if ($image){
             if($project->img_path){
-                Storage::disk('public')->delete($project->img_path);
+                Storage::disk('public')->deleteDirectory(dirname($project->img_path));
             }
             $data['img_path']= $image->store('project/'.Str::random(),'public');
             Log::info("ProjectController:update=> Found image");
@@ -174,7 +174,7 @@ class ProjectController extends Controller
         //
         $project->delete();
         if($project->img_path){
-            Storage::disk('public')->delete(dirname($project->img_path));
+            Storage::disk('public')->deleteDirectory(dirname($project->img_path));
             Log::info("ProjectController:destroy, deleted picture ".Json_encode($project->img_path));
         }
         Log::info("ProjectController:destroy, deleted project ".Json_encode($project));
