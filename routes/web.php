@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\ProjectAPIController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectAPIController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -58,8 +58,9 @@ Route::middleware('auth')->group(function () {
 });
 
 // Implementing HTTP API here
-Route::resource('/api/project/v1',ProjectAPIController::class);
+
 Route::get('/csrf-token', function(){
+    Route::resource('/api/project/v1',ProjectAPIController::class);
     return response()->json(['csrf-token'=> csrf_token()]);
 });
 

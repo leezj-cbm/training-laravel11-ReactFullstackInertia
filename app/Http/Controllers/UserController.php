@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -14,6 +16,40 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function register(StoreUserRequest $request)
+    {
+        $data = $request->validated();
+        $data['created_at'] = time();
+        $data['updated_at'] = time();
+        $data['password'] = bcrypt($data['password']);
+        $data['updated_at']=time();
+        $user = User::create($data);
+        $token = $user->createToken('PassportAuth')->accessToken;
+        return response()->json(['token'=>$token],200);
+    }
+
+    //~ createToken has issue!
+    // public function login(Request $request){
+    //     $data =[
+    //         'email'=> $request->email,
+    //         'password'=> $request->password,
+    //     ];
+
+    //     if (auth()->attempt($data)){
+    //         $token = auth()->user()->createToken('PassportAuth')->accessToken;
+    //         return response()->json(['token'=>$token],200);
+    //     }else {
+    //         return response()->json(['error'=>'Unauthorized'],401);
+    //     }
+    // }
+    
+    public function userInfo(){
+        $user=auth()->user();
+        return response()->json(['user'=>$user],200);
+    }
+
+
+
     public function index()
     {
         //
