@@ -180,4 +180,6 @@ class ProjectController extends Controller
         Log::info("ProjectController:destroy, deleted project ".Json_encode($project));
         return to_route('project.index')->with('success','Project '.(string)$project->name.' was deleted!');
     }
+
+
 }
