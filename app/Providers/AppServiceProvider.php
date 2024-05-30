@@ -22,6 +22,5 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
     }
 }

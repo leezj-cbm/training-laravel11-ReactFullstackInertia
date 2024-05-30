@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -23,31 +24,42 @@ class UserController extends Controller
         $data['updated_at'] = time();
         $data['password'] = bcrypt($data['password']);
         $data['updated_at']=time();
+        Log::info("UserController::register , received data=".json_encode($data));
         $user = User::create($data);
-        $token = $user->createToken('PassportAuth')->accessToken;
+        Log::info("UserController::register , user created=".json_encode($user));
+        try{
+            $token = $user->createToken($user->name)->accessToken;
+            Log::info("UserController::register , token created=".json_encode($token));
+        }catch(Exception $e){
+            Log::warning("UserController::register ".$e);
+            return response()->json(["Message:"=> $e],500);
+        }
+        
         return response()->json(['token'=>$token],200);
     }
 
-    //~ createToken has issue!
-    // public function login(Request $request){
-    //     $data =[
-    //         'email'=> $request->email,
-    //         'password'=> $request->password,
-    //     ];
-
-    //     if (auth()->attempt($data)){
-    //         $token = auth()->user()->createToken('PassportAuth')->accessToken;
-    //         return response()->json(['token'=>$token],200);
-    //     }else {
-    //         return response()->json(['error'=>'Unauthorized'],401);
-    //     }
-    // }
+    public function login(Request $request){
+        $data =[
+            'email'=> $request->email,
+            'password'=> $request->password,
+        ];
+        Log::info("UserController::login , received login data=".json_encode($data));
+        if (auth()->attempt($data)){
+            $user = User::query()->where("email",$data['email'])->first();
+            $token = $user->createToken('PassportAuth')->accessToken;
+            Log::info("UserController::login , token created=".json_encode($token));
+            return response()->json(['token'=>$token],200);
+        }else {
+            Log::warning("UserController::login error! Unauthorized! ");
+            return response()->json(['error'=>'Unauthorized'],401);
+        }
+    }
     
     public function userInfo(){
         $user=auth()->user();
+        Log::info("UserController:userInfo , userInfo sent, data=".json_encode($user));
         return response()->json(['user'=>$user],200);
     }
-
 
 
     public function index()
@@ -95,7 +107,13 @@ class UserController extends Controller
         $data['password'] = bcrypt($data['password']);
         $data['updated_at']=time();
         Log::info('UserController:store=> ' . json_encode($data));
-        User::create($data);
+        $user=User::create($data);
+        try{
+            $token = $user->createToken($user->name)->accessToken;
+            Log::info("UserController::register , token created=".json_encode($token));
+        }catch(Exception $e){
+            Log::warning("UserController::register ".$e);
+        }
         return to_route('user.index')->with('success', 'The user:' . (string)$request->name . ' was created');
     }
 

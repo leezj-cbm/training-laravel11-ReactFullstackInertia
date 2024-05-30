@@ -60,7 +60,6 @@ Route::middleware('auth')->group(function () {
 // Implementing HTTP API here
 
 Route::get('/csrf-token', function(){
-    Route::resource('/api/project/v1',ProjectAPIController::class);
     return response()->json(['csrf-token'=> csrf_token()]);
 });
 
