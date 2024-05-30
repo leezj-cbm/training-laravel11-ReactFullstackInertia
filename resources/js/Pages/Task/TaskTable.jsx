@@ -196,7 +196,7 @@ export default function TaskTable({ queryParams, routing, tasks }) {
                   </td>
                   <td className="px-3 py-2 text-nowrap">{item.priority}</td>
                   <td className="px-3 py-2 text-nowrap">
-                    {item.assignedUserId.id}
+                    {item.assignedUserId == null? "User Deleted" :item.assignedUserId.id}
                   </td>
                   <td className="px-3 py-2 text-nowrap">{item.createdAt}</td>
                   <td className="px-3 py-2 text-nowrap">{item.dueDate}</td>

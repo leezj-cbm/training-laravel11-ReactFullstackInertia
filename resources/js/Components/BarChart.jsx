@@ -63,8 +63,12 @@ export default function BarChart({ projNum, taskNum, userNum }) {
 
   return (
     <>
-      
       <Bar options={options} data={data} />
+      <div className="text-white align-middle text-center  m-auto">
+        <h2>Projects:  {projNum}</h2>
+        <h2>Tasks:  {taskNum}</h2>
+        <h2>Users:  {userNum}</h2>
+      </div>
     </>
   );
 }

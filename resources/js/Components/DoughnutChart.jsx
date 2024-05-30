@@ -48,6 +48,11 @@ export default function DoughnutChart({ taskPend, taskInProg, taskComp }) {
     <>
       
       <Doughnut data={data} options={options} />
+      <div className="text-white  text-center  m-auto">
+        <h2>Pending : {taskPend}</h2>
+        <h2>In Progress : {taskInProg}</h2>
+        <h2>Completed : {taskComp}</h2>
+      </div>
     </>
   );
 }
