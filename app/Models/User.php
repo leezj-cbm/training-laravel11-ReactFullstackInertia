@@ -20,10 +20,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'designation',
         'email',
+        'contact_number',
+        'role',
         'password',
-        'created_at',
-        'updated_at',
         'email_verified_at',
     ];
 
@@ -48,5 +49,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function properties(){
+        return $this->belongsToMany(Property::class);
     }
 }

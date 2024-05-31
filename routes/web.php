@@ -46,8 +46,11 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //add in project controller , task controller and user controller
 
+    /*
+    DISABLED FOR DIGIHUB
     Route::resource('project',ProjectController::class);
     Route::resource('task',TaskController::class);
+    */
     Route::resource('user',UserController::class);
 });
 

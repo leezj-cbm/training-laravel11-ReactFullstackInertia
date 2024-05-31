@@ -6,12 +6,12 @@ import DoughnutChart from "@/Components/DoughnutChart";
 
 export default function Dashboard({
   auth,
-  projNum,
-  taskNum,
-  userNum,
-  taskPend,
-  taskInProg,
-  taskComp,
+  // projNum,
+  // taskNum,
+  // userNum,
+  // taskPend,
+  // taskInProg,
+  // taskComp,
 }) {
   const [time, setTime] = useState("");
   useEffect(() => {
@@ -38,11 +38,11 @@ export default function Dashboard({
               <h1>Here are the statistics as of : {time} </h1>
               <div className="max-w-lg align-middle justify-items-center rounded-2xl py-10 m-auto">
 
-                <BarChart
+                {/* <BarChart
                   projNum={projNum}
                   taskNum={taskNum}
                   userNum={userNum}
-                />
+                /> */}
 
                
 
@@ -50,11 +50,11 @@ export default function Dashboard({
 
               <div className="max-w-sm align-middle justify-items-center  rounded-2xl py-10 m-auto">
 
-                <DoughnutChart
+                {/* <DoughnutChart
                   taskPend={taskPend}
                   taskInProg={taskInProg}
                   taskComp={taskComp}
-                />
+                /> */}
               </div>
             </div>
           </div>

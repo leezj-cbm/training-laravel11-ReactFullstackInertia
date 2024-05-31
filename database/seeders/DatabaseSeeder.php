@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
 use App\Models\User;
-use App\Models\Project;
-use App\Models\Task;
+use App\Models\Property;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,25 +14,33 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        // User::factory(10)->create();
+    {   
+        //specific user for testing
+        // User::factory()->create([
+        //     'name' => 'zhenjianlee',
+        //     'email' => 'zhenjianlee@test.com',
+        //     'password'=>bcrypt('zhen123!'),
+        //     'email_verified_at'=>time(),
+        // ]);
 
-        User::factory()->create([
-            'name' => 'zhenjianlee',
-            'email' => 'zhenjianlee@example.com',
-            'password'=>bcrypt('12345678'),
-            'email_verified_at'=>time(),
-        ]);
+        // Client::factory()->count(10)->hasProperties(3)->create();
+    
+        // $properties = Property::factory()->count(10)->create();
 
-        Project::factory()
-                    ->count(30)
-                    ->hasTasks(30)
-                    ->create();
+        // User::factory()->count(10)->create()->each(
+        //     function($user) use ($properties){
+        //         $user->properties()->attach(
+        //             $properties->random(rand(1,3))->pluck('id')->toArray()
+        //         );
+        //     }
+        // );
 
-        // do i still need this? hasTasks above seems to already seed the DB
-        // Task::factory()
-        //             ->count(30)
-        //             ->hasUsers(30)
-        //             ->create();
+        Client::factory()->count(10)->create();
+        
+        User::factory()->count(10)->create();
+
+        Property::factory()->count(10)->create();
+
+
     }
 }
