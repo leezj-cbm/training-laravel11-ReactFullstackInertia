@@ -9,7 +9,7 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','UEN_number','contact_name','contact_email','contact_number','created_at','updated_at'];
+    protected $fillable = ['name','UEN_number','contact_name','contact_email','contact_number'];
 
     public function properties(){
         return $this->hasMany(Property::class);

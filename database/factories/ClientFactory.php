@@ -22,7 +22,10 @@ class ClientFactory extends Factory
             'UEN_number'=> fake()->word(),
             'contact_name'=>fake()->name(),
             'contact_email'=>fake()->unique()->safeEmail(),
-            // 'contact_number'=>fake()->name(),
+            'contact_number'=>fake()->phoneNumber(),
+            'created_at'=>time(),
+            'updated_at'=>time(),
+
         ];
     }
 }

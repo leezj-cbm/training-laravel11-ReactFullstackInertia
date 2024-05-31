@@ -20,12 +20,15 @@ class PropertyFactory extends Factory
         return [
             //
             'name'=>fake()->name(),
+            'client_id'=>random_int(1,10),
             'description'=>fake()->sentence(),
             'image_path'=>fake()->imageUrl(),
             'address'=>fake()->streetAddress(),
             'coordinates'=>fake()->numberBetween($int1 = 1 , $int2 = 10000000),
             'top_date'=>time(),
             'status'=>array_rand($status),
+            'created_at'=>time(),
+            'updated_at'=>time(),
 
         ];
     }

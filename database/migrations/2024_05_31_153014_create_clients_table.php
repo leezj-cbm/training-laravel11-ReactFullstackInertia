@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('UEN_number');
             $table->string('contact_name');
             $table->string('contact_email')->unique();
-            // $table->string('contact_number');
+            $table->string('contact_number');
             $table->timestamps();
         });
     }

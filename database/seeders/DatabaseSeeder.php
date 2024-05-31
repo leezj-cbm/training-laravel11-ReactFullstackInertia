@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Client;
 use App\Models\User;
 use App\Models\Property;
+use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,23 +24,21 @@ class DatabaseSeeder extends Seeder
         //     'email_verified_at'=>time(),
         // ]);
 
-        // Client::factory()->count(10)->hasProperties(3)->create();
-    
-        // $properties = Property::factory()->count(10)->create();
+        Client::factory()->count(10)->hasProperties(3)->create();
+        $properties = Property::factory()->count(10)->create();
+        User::factory()->count(10)->create()->each(
+            function($user) use ($properties){
+                $user->properties()->attach(
+                    $properties->random(rand(1,3))->pluck('id')->toArray()
+                );
+                $user->created_at= Carbon::now();
+                $user->updated_at =Carbon::now();
+            }
+        );
 
-        // User::factory()->count(10)->create()->each(
-        //     function($user) use ($properties){
-        //         $user->properties()->attach(
-        //             $properties->random(rand(1,3))->pluck('id')->toArray()
-        //         );
-        //     }
-        // );
-
-        Client::factory()->count(10)->create();
-        
-        User::factory()->count(10)->create();
-
-        Property::factory()->count(10)->create();
+        // Client::factory()->count(10)->create();
+        // User::factory()->count(10)->create();
+        // Property::factory()->count(10)->create();
 
 
     }
