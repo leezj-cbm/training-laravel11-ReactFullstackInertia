@@ -4,15 +4,7 @@ import { useEffect, useState } from "react";
 import BarChart from "@/Components/BarChart";
 import DoughnutChart from "@/Components/DoughnutChart";
 
-export default function Dashboard({
-  auth,
-  // projNum,
-  // taskNum,
-  // userNum,
-  // taskPend,
-  // taskInProg,
-  // taskComp,
-}) {
+export default function Dashboard({ auth, dashBoardData }) {
   const [time, setTime] = useState("");
   useEffect(() => {
     const now = new Date();
@@ -37,19 +29,10 @@ export default function Dashboard({
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <h1>Here are the statistics as of : {time} </h1>
               <div className="max-w-lg align-middle justify-items-center rounded-2xl py-10 m-auto">
-
-                {/* <BarChart
-                  projNum={projNum}
-                  taskNum={taskNum}
-                  userNum={userNum}
-                /> */}
-
-               
-
+                <BarChart dashBoardData={dashBoardData} />
               </div>
 
               <div className="max-w-sm align-middle justify-items-center  rounded-2xl py-10 m-auto">
-
                 {/* <DoughnutChart
                   taskPend={taskPend}
                   taskInProg={taskInProg}

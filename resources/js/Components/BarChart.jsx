@@ -19,15 +19,15 @@ ChartJS.register(
   Legend
 );
 
-export default function BarChart({ projNum, taskNum, userNum }) {
-  const labels = ["Projects", "Tasks", "Users"];
+export default function BarChart({ dashBoardData }) {
+  const labels = ["Properties", "Clients", "Users"];
 
   const data = {
     labels,
     datasets: [
       {
         label: "Count",
-        data: [projNum, taskNum, userNum],
+        data: [dashBoardData.propNum, dashBoardData.clientNum, dashBoardData.userNum],
         borderColor: [
           "rgba(75, 192, 192, 1)",
           "rgba(54, 162, 235, 1)",
@@ -65,9 +65,9 @@ export default function BarChart({ projNum, taskNum, userNum }) {
     <>
       <Bar options={options} data={data} />
       <div className="text-white align-middle text-center  m-auto">
-        <h2>Projects:  {projNum}</h2>
-        <h2>Tasks:  {taskNum}</h2>
-        <h2>Users:  {userNum}</h2>
+        <h2>Clients:  {dashBoardData.clientNum}</h2>
+        <h2>Properties:  {dashBoardData.propNum}</h2>
+        <h2>Users:  {dashBoardData.userNum}</h2>
       </div>
     </>
   );

@@ -14,14 +14,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
       route: "dashboard",
       tag: "Dashboard",
     },
-    {
-      route: "project.index",
-      tag: "Project",
-    },
-    {
-      route: "task.index",
-      tag: "Task",
-    },
+
     {
       route: "user.index",
       tag: "User",

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Project;
+use App\Models\Property;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,23 +15,22 @@ class DashboardController extends Controller
 {
     //
     public function index(){
-        $projNum = Project::count();
-        $taskNum= Task::count();
+        $propNum = Property::count();
+        $clientNum= Client::count();
         $userNum = User::count();
         
-        $taskPend = Task::query()->where("status","pending")->count();
-        $taskInProg = Task::query()->where("status","pending")->count();
-        $taskComp = Task::query()->where("status","pending")->count();
+        // $taskPend = Task::query()->where("status","pending")->count();
+        // $taskInProg = Task::query()->where("status","pending")->count();
+        // $taskComp = Task::query()->where("status","pending")->count();
 
-        Log::info("projNum=".(string)$projNum." taskNum=".(string)$taskNum." userNum=".(string)$userNum);
+        $data['propNum']=$propNum;
+        $data['clientNum']=$clientNum;
+        $data['userNum']=$userNum;
+
+        Log::info("propNum=".(string)$propNum." clientNum=".(string)$clientNum." userNum=".(string)$userNum);
 
         return inertia("Dashboard",[
-            'projNum'=>$projNum,
-            'taskNum'=>$taskNum,
-            'userNum'=>$userNum,
-            'taskPend'=>$taskPend  ,
-            'taskInProg'=>$taskInProg,
-            'taskComp'=>$taskComp ,
+            'dashBoardData'=> $data,
         ]);
     }
 }
