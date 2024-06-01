@@ -14,4 +14,8 @@ class Asset extends Model
     public function properties(){
         return $this->belongsTo(Property::class);
     }
+
+    public function sensors(){
+        return $this->hasMany(Sensor::class);
+    }
 }

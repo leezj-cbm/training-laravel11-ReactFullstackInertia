@@ -6,6 +6,9 @@ use App\Models\Asset;
 use App\Models\Client;
 use App\Models\User;
 use App\Models\Property;
+use App\Models\Reading;
+use App\Models\Sensor;
+use App\Models\Task;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -38,6 +41,9 @@ class DatabaseSeeder extends Seeder
         );
 
         Asset::factory()->count(10)->create();
+        Task::factory()->count(10)->create();
+        Sensor::factory()->count(10)->create();
+        Reading::factory()->count(10)->create();
 
         // Client::factory()->count(10)->create();
         // User::factory()->count(10)->create();

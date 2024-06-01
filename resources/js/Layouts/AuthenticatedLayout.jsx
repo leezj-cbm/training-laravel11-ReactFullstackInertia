@@ -14,6 +14,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
       route: "dashboard",
       tag: "Dashboard",
     },
+    {
+      route: "property.index",
+      tag: "Property",
+    },
 
     {
       route: "user.index",

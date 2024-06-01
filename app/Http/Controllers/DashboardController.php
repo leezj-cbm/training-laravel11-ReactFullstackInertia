@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Asset;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\Property;
+use App\Models\Reading;
+use App\Models\Sensor;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,19 +21,31 @@ class DashboardController extends Controller
         $propNum = Property::count();
         $clientNum= Client::count();
         $userNum = User::count();
-        
-        // $taskPend = Task::query()->where("status","pending")->count();
-        // $taskInProg = Task::query()->where("status","pending")->count();
-        // $taskComp = Task::query()->where("status","pending")->count();
+        $assetNum = Asset::count();
+        $taskNum=Task::count();
+        $sensorNum = Sensor::count();
+        $readingNum = Reading::count();
+        $genData['propNum']=$propNum;
+        $genData['clientNum']=$clientNum;
+        $genData['userNum']=$userNum;
+        $genData['assetNum']=$assetNum;
+        $genData['taskNum']=$taskNum;
+        $genData['sensorNum']=$sensorNum;
+        $genData['readingNum']=$readingNum;
 
-        $data['propNum']=$propNum;
-        $data['clientNum']=$clientNum;
-        $data['userNum']=$userNum;
+        $taskPend = Task::query()->where("status","pending")->count();
+        $taskInProg = Task::query()->where("status","in_progress")->count();
+        $taskComp = Task::query()->where("status","completed")->count();
 
-        Log::info("propNum=".(string)$propNum." clientNum=".(string)$clientNum." userNum=".(string)$userNum);
+        $taskData['taskPend']=$taskPend;
+        $taskData['taskInProg']=$taskInProg;
+        $taskData['taskComp']=$taskComp;
+
+
 
         return inertia("Dashboard",[
-            'dashBoardData'=> $data,
+            'dashBoardData'=> $genData,
+            'taskData'=>$taskData,
         ]);
     }
 }

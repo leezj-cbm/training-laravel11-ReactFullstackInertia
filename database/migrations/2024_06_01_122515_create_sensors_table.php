@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('sensors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained('clients');
+            $table->foreignId('asset_id')->constrained('assets');
             $table->string('name');
+            $table->string('type');
             $table->longText('description');
-            $table->string('image_path');
-            $table->string('address');
-            $table->string('coordinates');
-            $table->date('top_date');
             $table->string('status');
+            $table->date('deployed_at');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('properties');
+        Schema::dropIfExists('sensors');
     }
 };

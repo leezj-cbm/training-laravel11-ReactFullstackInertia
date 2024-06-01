@@ -3,7 +3,9 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function DoughnutChart({ taskPend, taskInProg, taskComp }) {
+export default function DoughnutChart({ taskData }) {
+
+  const {taskPend,taskInProg,taskComp}=taskData;
   const data = {
     labels: ["Pending", "In Progress", "Completed"],
     datasets: [
@@ -48,6 +50,7 @@ export default function DoughnutChart({ taskPend, taskInProg, taskComp }) {
     <>
       
       <Doughnut data={data} options={options} />
+      {/* <pre>{JSON.stringify(taskData,undefined,5)}</pre> */}
       <div className="text-white  text-center  m-auto">
         <h2>Pending : {taskPend}</h2>
         <h2>In Progress : {taskInProg}</h2>

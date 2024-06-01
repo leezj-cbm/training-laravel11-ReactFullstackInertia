@@ -25,7 +25,7 @@ class PropertyFactory extends Factory
             'image_path'=>fake()->imageUrl(),
             'address'=>fake()->streetAddress(),
             'coordinates'=>fake()->numberBetween($int1 = 1 , $int2 = 10000000)." , ".fake()->numberBetween($int1 = 1 , $int2 = 10000000),
-            'top_date'=>time(),
+            'top_date'=>fake()->date(),
             'status'=>$status[random_int(0,2)],
             'created_at'=>time(),
             'updated_at'=>time(),

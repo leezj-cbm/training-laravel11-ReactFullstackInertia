@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('readings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('property_id')->constrained('properties');
-            $table->string('name');
-            $table->string('type');
-            $table->string('make');
-            $table->string('model');
-            $table->string('location');
-            $table->string('status');
+            $table->foreignId('sensor_id');
+            $table->double('value');
+            $table->string("measured_unit");
+            $table->timestamp('measured_time');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('readings');
     }
 };

@@ -18,19 +18,17 @@ class TaskFactory extends Factory
     {
         return [
             //
-            'name'=> fake()->sentence(),
+            'asset_id'=>random_int(1,10),
+            'name'=> fake()->name(),
             'description'=>fake()->realText(),
             'due_date'=>fake()->dateTimeBetween('now','+1 year'),
-            'image_path'=>fake()->imageUrl(),
             'status'=>fake()
                         ->randomElement(['pending','in_progress','completed']),
             'priority'=>fake()
                         ->randomElement(['low','medium','high']),
-            'assigned_user_id'=>fake()->randomElement(([1,2])),
-            'created_by'=>1,
-            'updated_by'=>1,
+            'PIC'=>fake()->name(),
             'created_at'=>time(),
-            'created_at'=>time(),
+            'updated_at'=>time(),
 
         ];
     }

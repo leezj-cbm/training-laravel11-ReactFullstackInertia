@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asset_id')->constrained('assets');
             $table->string('name');
-            $table->longText('description')->nullable();
-            $table->string('image_path')->nullable();
+            $table->longText('description');
+            $table->date('due_date');
             $table->string('status');
             $table->string('priority');
-            $table->string('due_date')->nullable();
-            $table->string('assigned_user_id')->constrained('users');
-            $table->foreignId('created_by')->constrained('users');
-            $table->foreignId('updated_by')->constrained('users');
-            $table->foreignId('project_id')->constrained('projects');
+            $table->string('PIC');
             $table->timestamps();
         });
     }
