@@ -5,7 +5,7 @@ import TableHeading from "@/Components/TableHeading.jsx";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/Pages/Constants";
 import Pagination from "../../Components/Pagination";
 
-export default function PropertyTable({properties, queryParams = null, routing}) {
+export default function AssetTable({assets, queryParams = null, routing}) {
 
     queryParams = queryParams || {}; // if queryParam is null, convert it into object! see ProjectController Note A!
     const searchFieldChanged = (name, value) => {
@@ -23,11 +23,11 @@ export default function PropertyTable({properties, queryParams = null, routing})
       searchFieldChanged(name, e.target.value);
     };
   
-    const deleteProject=(theProperty)=>{
-      if (!window.confirm("Are you sure you want to delete property?")){
+    const deleteProject=(theAsset)=>{
+      if (!window.confirm("Are you sure you want to delete Asset?")){
         return;
       }
-      router.delete(route('property.destroy',theProperty));
+      router.delete(route('asset.destroy',theAsset));
     }
 
   return (
@@ -51,7 +51,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                           queryParams={queryParams}
                           routing={routing}
                         >
-                          Property 
+                          Asset Name
                         </TableHeading>
                       </th>
                       <th className="px-3 py-2">
@@ -60,7 +60,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                           queryParams={queryParams}
                           routing={routing}
                         >
-                          Client 
+                          Property Name
                         </TableHeading>
                       </th>
                       <th className="px-3 py-2">
@@ -69,7 +69,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                           queryParams={queryParams}
                           routing={routing}
                         >
-                          Status
+                          Type
                         </TableHeading>
                       </th>
                       <th className="px-3 py-2">
@@ -78,11 +78,11 @@ export default function PropertyTable({properties, queryParams = null, routing})
                           queryParams={queryParams}
                           routing={routing}
                         >
-                          TOP Date
+                          Make
                         </TableHeading>
                       </th>
                       <th className="px-3 py-2">
-                          Total Assets
+                          Model
                       </th>
                       <th className="px-3 py-2 text-right">Actions</th>
                     </tr>
@@ -94,7 +94,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                       <th className="px-3 py-2">
                         <TextInput
                           className="w-full "
-                          placeholder="Property Name"
+                          placeholder="Asset Name"
                           defaultValue={queryParams.name}
                           onBlur={(e) =>
                             searchFieldChanged("name", e.target.value)
@@ -123,7 +123,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                     </tr>
                   </thead>
                   <tbody>
-                    {properties.data.map((item) => (
+                    {assets.data.map((item) => (
                       <tr
                         key={item.id}
                         className="bg-white border-b dark:bg-gray-800 dark:border-gray 700"
@@ -137,11 +137,11 @@ export default function PropertyTable({properties, queryParams = null, routing})
                           />
                         </td>
                         <th className="px-3 py-2 text-white hover:underline">
-                          <Link href={route("property.show", item)}>
+                          <Link href={route("asset.show", item)}>
                             {item.name}
                           </Link>
                         </th>
-                        <td className="px-3 py-2">{item.clientName}</td>
+                        <td className="px-3 py-2">{item.clientId}</td>
                         <td className="px-3 py-2">
                           <span
                             className={
@@ -160,7 +160,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                         </td>
                         <td className="px-3 py-2 text-nowrap">
                           <Link
-                            href={route("property.edit", item)}
+                            href={route("asset.edit", item)}
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                           >
                             Edit
@@ -176,7 +176,7 @@ export default function PropertyTable({properties, queryParams = null, routing})
                     ))}
                   </tbody>
                 </table> 
-                <Pagination links={properties.meta.links} />
+                <Pagination links={assets.meta.links} />
     </div>
   );
 }

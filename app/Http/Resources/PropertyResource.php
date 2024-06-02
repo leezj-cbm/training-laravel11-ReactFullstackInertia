@@ -23,7 +23,8 @@ class PropertyResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'clientId'=>Client::find($this->id)?Client::find($this->id)->name : "Undefined" ,
+            'clientId'=>$this->client_id,
+            "clientName"=>Client::find($this->client_id)->name,
             'name'=>$this->name,
             'description'=>$this->description,
             'imgPath'=>$this->image_path ? Storage::url($this->image_path):'',

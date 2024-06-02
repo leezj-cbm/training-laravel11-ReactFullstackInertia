@@ -17,13 +17,15 @@ class AssetResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'name'=>$this->name,
-            'property_id'=>Property::find($this->id)?Property::find($this->id)->name:"Undefined" ,
+            'property_id'=>$this->property_id ,
             'type'=>$this->type,
             'make'=>$this->make,
             'model'=>$this->model,
             'location'=>$this->location,
             'status'=>$this->status,
+            'sensorsCount'=>$this->sensors()->count(),
         ];
     }
 }
